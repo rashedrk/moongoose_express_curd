@@ -14,8 +14,39 @@ const getUserFromDB = async (id: string) => {
     return result;
 }
 
+const updateUserToDB = async (user: TUser, id: string) => {
+    
+    if (await User.isUserExists(id)) {
+        const result = await User.findOneAndUpdate({ userId: id }, user, {
+            new: true,
+            password: 0,
+        });
+        return result;
+    }
+    else {
+        throw Error
+    }
+}
+
+const deleteUserFromDB = async (id: string) => {
+    
+    if (await User.isUserExists(id)) {
+        const result = await User.findOneAndUpdate({ userId: id }, {
+            isDeleted: true
+        }, {
+            new: false,
+        });
+        return result;
+    }
+    else {
+        throw Error
+    }
+}
+
 export const userServices = {
     createUserIntoDB,
     getAllUsersFromDB,
-    getUserFromDB
+    getUserFromDB,
+    updateUserToDB,
+    deleteUserFromDB
 }
