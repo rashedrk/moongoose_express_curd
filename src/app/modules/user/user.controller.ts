@@ -37,13 +37,40 @@ const getAllUser = async (req: Request, res: Response) => {
         res.status(400).json({
             success: false,
             message: "Users fetched failed!",
-            data: error
+            error: error
         });
     }
+};
 
-}
+const getUser = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params
+        const result = await userServices.getUserFromDB(userId);
+        if (result.length > 0) {
+            res.status(200).json({
+                success: true,
+                message: "User fetched successfully!",
+                data: result
+            })
+        }
+        else {
+           throw Error
+        }
+    } catch (error) {
+        res.status(404).json({
+            success: false,
+            message: "User not found",
+            error: {
+                "code": 404,
+                "description": "User not found!"
+            }
+        });
+    }
+};
+
 
 export const userControllers = {
     createUser,
-    getAllUser
+    getAllUser,
+    getUser
 }
