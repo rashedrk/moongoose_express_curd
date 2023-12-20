@@ -1,13 +1,3 @@
-export type TFullName = {
-    firstName: string;
-    lastName: string;
-}
-
-export type TAddress = {
-    street: string;
-    city: string;
-    country: string;
-}
 
 export type TOrder = {
     productName: string;
@@ -19,12 +9,19 @@ export type TUser = {
     userId: number;
     username: string;
     password: string;
-    fullName: TFullName;
+    fullName: {
+        firstName: string;
+        lastName: string;
+    };
     age: number;
     email: string;
     isActive: boolean;
     hobbies: string[];
-    address: TAddress;
-    orders: TOrder[];
+    address: {
+        street: string;
+        city: string;
+        country: string;
+    };
+    orders?: TOrder[];
 }
 
